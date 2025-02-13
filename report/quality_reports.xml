@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <!-- Report Action -->
+        <record id="action_report_quality_check" model="ir.actions.report">
+            <field name="name">Quality Control Report</field>
+            <field name="model">mrp.production</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">mrp_quality_workflow.report_quality_check</field>
+            <field name="report_file">mrp_quality_workflow.report_quality_check</field>
+            <field name="binding_model_id" ref="model_mrp_production"/>
+            <field name="binding_type">report</field>
+        </record>
+
+    </data>
+</odoo>

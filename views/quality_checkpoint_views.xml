@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Product Template Form View Inheritance -->
+        <record id="product_template_form_view_quality_inherited" model="ir.ui.view">
+            <field name="name">product.template.quality.inherited</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_form_view"/>
+            <field name="arch" type="xml">
+                <notebook position="inside">
+                    <page string="Quality Control" name="quality_control" groups="mrp_quality_workflow.group_quality_manager">
+                        <field name="quality_checkpoint_template_ids">
+                            <tree editable="bottom">
+                                <field name="sequence" widget="handle"/>
+                                <field name="name"/>
+                                <field name="check_type"/>
+                                <field name="target_value"/>
+                                <field name="tolerance_range"/>
+                            </tree>
+                        </field>
+                    </page>
+                </notebook>
+            </field>
+        </record>
+        
+        <!-- Quality Checkpoint Form View -->
+        <record id="quality_checkpoint_form_view" model="ir.ui.view">
+            <field name="name">mrp.quality.checkpoint.form</field>
+            <field name="model">mrp.quality.checkpoint</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="action_confirm" 
+                            string="Confirm" 
+                            type="object"
+                            class="btn btn-primary"
+                            invisible="state in ('failed') or approval_state in ('confirm','validate')"
+                            groups="mrp_quality_workflow.group_quality_user"/>
+                        <button name="action_validate" 
+                            string="Validate" 
+                            type="object"
+                            class="btn btn-primary"
+                            invisible="state in ('failed') or approval_state in ('draft','validate')"
+                            groups="mrp_quality_workflow.group_quality_manager"/>
+                        <field name="approval_state" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name" invisible="1"/>
+                                <field name="production_id" invisible="1"/>
+                                <field name="check_type" readonly="1"/>
+                                <field name="sequence" readonly="1"/>
+                                 <field name="target_value" readonly="1"/>
+                                <field name="tolerance_range" readonly="1"/>
+                                <field name="measured_value" readonly="approval_state not in ('draft')"/>
+                            </group>
+                            <group>
+                                <field name="state" readonly="1" decoration-info="state == 'pending'"
+                                  decoration-success="state == 'passed'"
+                                  decoration-danger="state == 'failed'"/>
+                                <field name="checked_by" readonly="1"/>
+                                <field name="check_date" readonly="1"/>
+                                <field name="approved_by" readonly="1"/>
+                                <field name="approval_date" readonly="1"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Notes" name="notes">
+                                <field name="notes" readonly="approval_state not in ('draft')"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_mrp_quality_checkpoint_user,mrp.quality.checkpoint.user,model_mrp_quality_checkpoint,mrp_quality_workflow.group_quality_user,1,1,1,0
+access_mrp_quality_checkpoint_mrp_user,mrp.quality.checkpoint.mrp.user,model_mrp_quality_checkpoint,mrp.group_mrp_user,1,0,1,0
+access_mrp_quality_checkpoint_manager,mrp.quality.checkpoint.manager,model_mrp_quality_checkpoint,mrp_quality_workflow.group_quality_manager,1,1,1,1
+access_quality_checkpoint_template_user,quality.checkpoint.template.user,model_quality_checkpoint_template,mrp_quality_workflow.group_quality_user,1,0,0,0
+access_quality_checkpoint_template_mrp_user,quality.checkpoint.template.mrp.user,model_quality_checkpoint_template,mrp.group_mrp_user,1,0,0,0
+access_quality_checkpoint_template_manager,quality.checkpoint.template.manager,model_quality_checkpoint_template,mrp_quality_workflow.group_quality_manager,1,1,1,1

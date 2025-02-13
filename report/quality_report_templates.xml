@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data noupdate="0">
+        <template id="report_quality_check">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="web.external_layout">
+                        <div class="page">
+                            <div class="oe_structure"/>
+                            <div class="row">
+                                <div class="col-12">
+                                    <h2>Quality Control Report</h2>
+                                </div>
+                            </div>
+    
+                            <!-- Header Information -->
+                            <div class="row mt32 mb32">
+                                <div class="col-3">
+                                    <strong>Manufacturing Order:</strong>
+                                    <p t-field="o.name"/>
+                                </div>
+                                <div class="col-3">
+                                    <strong>Product:</strong>
+                                    <p t-field="o.product_id.display_name"/>
+                                </div>
+                                <div class="col-3">
+                                    <strong>Quantity:</strong>
+                                    <p t-field="o.product_qty"/>
+                                </div>
+                                <div class="col-3">
+                                    <strong>Quality Status:</strong>
+                                    <p t-field="o.quality_state"/>
+                                </div>
+                            </div>
+    
+                            <!-- Quality Checks Table -->
+                            <table class="table table-sm o_main_table">
+                                <thead>
+                                    <tr>
+                                        <th>Check Point</th>
+                                        <th>Type</th>
+                                        <th>Target Value</th>
+                                        <th>Tolerance (±)</th>
+                                        <th>Measured Value</th>
+                                        <th>Status</th>
+                                        <th>Checked By</th>
+                                        <th>Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="o.quality_check_ids" t-as="check">
+                                        <tr>
+                                            <td><span t-field="check.name"/></td>
+                                            <td><span t-field="check.check_type"/></td>
+                                            <td>
+                                                <span t-field="check.target_value"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="check.tolerance_range"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="check.measured_value"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="check.state"/>
+                                            </td>
+                                            <td><span t-field="check.checked_by"/></td>
+                                            <td><span t-field="check.check_date"/></td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+    
+                            <!-- Notes Section -->
+                            <div class="row mt32 mb32" t-if="o.quality_check_ids.filtered(lambda x: x.notes)">
+                                <div class="col-12">
+                                    <h4>Notes:</h4>
+                                    <t t-foreach="o.quality_check_ids.filtered(lambda x: x.notes)" t-as="check">
+                                        <div class="ml16">
+                                            <strong t-field="check.name"/>: <span t-field="check.notes"/>
+                                        </div>
+                                    </t>
+                                </div>
+                            </div>
+    
+                            <!-- Signature Section -->
+                            <div class="row mt64">
+                                <div class="col-6">
+                                    <div class="text-center">
+                                        <br/>
+                                        <br/>
+                                        <br/>
+                                        <p>_____________________</p>
+                                        <p>Quality Control</p>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="text-center">
+                                        <br/>
+                                        <br/>
+                                        <br/>
+                                        <p>_____________________</p>
+                                        <p>Quality Control Manager</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

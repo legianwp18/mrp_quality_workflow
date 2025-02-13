@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Manufacturing Order Form View Inheritance -->
+        <record id="mrp_production_form_view_inherited" model="ir.ui.view">
+            <field name="name">mrp.production.quality.inherited</field>
+            <field name="model">mrp.production</field>
+            <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='action_assign']" position="after">
+                     <button name="action_revalidate_quality" invisible="state not in ('on_hold')" string="Revalidate Quantity" type="object" data-hotkey="r" class="oe_highlight" groups="mrp_quality_workflow.group_quality_user"/>
+                </xpath>
+                <notebook position="inside">
+                    <page string="Quality Checks" name="quality_checks" groups="mrp_quality_workflow.group_quality_user">
+                        <group>
+                            <field name="quality_state" 
+                            widget="badge"
+                            decoration-info="quality_state in ('pending')"
+                            decoration-warning="quality_state == 'on_hold'"
+                            decoration-success="quality_state == 'passed'"
+                            decoration-danger="quality_state == 'failed'"/>
+                            <field name="require_revalidation" invisible="1"/>
+                        </group>
+                        <field name="quality_check_ids" create="0" delete="0">
+                            <tree
+                                  create="0"
+                                  delete="0"
+                                  decoration-info="state == 'pending'"
+                                  decoration-success="state == 'passed'"
+                                  decoration-danger="state == 'failed'">
+                                <field name="sequence" widget="handle"/>
+                                <field name="name"/>
+                                <field name="check_type"/>
+                                <field name="target_value"/>
+                                <field name="tolerance_range"/>
+                                <field name="measured_value"/>
+                                <field name="state"/>
+                                <field name="approval_state"/>
+                            </tree>
+                        </field>
+                    </page>
+                </notebook>
+            </field>
+        </record>
+    </data>
+</odoo>
